@@ -1,41 +1,15 @@
-# Better Queue - Store Tests
+# Better Queue - Memory Store
 
-This repository is a complement to [better-queue](https://github.com/diamondio/better-queue). This is useful for ensuring that the store you create is compatible with `better-queue`, and that guarantees that features in `better-queue` will work properly.
+The fastest, most performant, ephemeral store for [better-queue](https://github.com/diamondio/better-queue).
 
 
 ### Getting started
 
-Install this package as a dev dependency and add a mocha test:
-
-```bash
-npm install --save-dev better-queue-store-test
-```
-
-### Usage
-
-In your mocha test directory, add a test like so:
-
-```
-var test = require('better-queue-store-test');
-
-test.basic('My Store Test', {
-
-  create: function (cb) {
-    // Prepare your store here ...
-    cb(null, myStore);
-  },
-
-  destroy: function (cb) {
-    // Optionally, you can clean up after your store
-    cb();
-  }
-
-})
-```
+There's nothing to do! It's included with `better-queue` and used by default.
 
 ### Examples
 
-Look at [better-queue-memory](https://github.com/diamondio/better-queue-memory), which is used in `better-queue` for an example of how you should create your store and setup the test.
+Please have a look at the [better-queue](https://github.com/diamondio/better-queue) documentation on how to use this store.
 
 ### Contributions
 
