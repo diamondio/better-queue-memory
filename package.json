@@ -1,0 +1,31 @@
+{
+  "name": "better-queue-store-test",
+  "version": "1.0.0",
+  "description": "Better Queue store test",
+  "main": "tester.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diamondio/better-queue-store-test.git"
+  },
+  "keywords": [
+    "better",
+    "queue",
+    "test",
+    "store",
+    "plugin"
+  ],
+  "author": "Diamond Inc. <ops@diamond.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diamondio/better-queue-store-test/issues"
+  },
+  "homepage": "https://github.com/diamondio/better-queue-store-test#readme",
+  "peerDependencies": {
+    "better-queue": "3.x"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
