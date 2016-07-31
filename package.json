@@ -27,7 +27,7 @@
     "better-queue": "3.x"
   },
   "devDependencies": {
-    "better-queue-store-test": "^1.0.0"
+    "better-queue-store-test": "^1.0.2"
   },
   "dependencies": {}
 }
