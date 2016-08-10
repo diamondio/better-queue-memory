@@ -14,9 +14,9 @@ function stableSort(arr, compare) {
 
 function MemoryStore() {
   this._queue = [];      // Array of taskIds
-  this._tasks = {};      // Map of taskId => task
-  this._priorities = {}; // Map of taskId => priority
-  this._running = {};    // Map of lockId => taskIds
+  this._tasks = new Map();      // Map of taskId => task
+  this._priorities = new Map(); // Map of taskId => priority
+  this._running = new Map();    // Map of lockId => taskIds
 }
 
 MemoryStore.prototype.connect = function (cb) {
@@ -24,13 +24,13 @@ MemoryStore.prototype.connect = function (cb) {
 }
 
 MemoryStore.prototype.getTask = function (taskId, cb) {
-  return cb(null, this._tasks[taskId]);
+  return cb(null, this._tasks.get(taskId));
 }
 
 MemoryStore.prototype.deleteTask = function (taskId, cb) {
   var self = this;
-  delete self._tasks[taskId];
-  delete self._priorities[taskId];
+  self._tasks.delete(taskId);
+  self._priorities.delete(taskId);
   if (self._queue.indexOf(taskId) > -1) {
     self._queue.splice(self._queue.indexOf(taskId), 1);
   }
@@ -39,15 +39,15 @@ MemoryStore.prototype.deleteTask = function (taskId, cb) {
 
 MemoryStore.prototype.putTask = function (taskId, task, priority, cb) {
   var self = this;
-  self._tasks[taskId] = task;
+  self._tasks.set(taskId, task);
   if (self._queue.indexOf(taskId) === -1) {
     self._queue.push(taskId);
   }
   if (priority !== undefined) {
-    self._priorities[taskId] = priority;
+    self._priorities.set(taskId, priority);
     self._queue = stableSort(self._queue, function (a, b) {
-      if (self._priorities[a] < self._priorities[b]) return 1;
-      if (self._priorities[a] > self._priorities[b]) return -1;
+      if (self._priorities.get(a) < self._priorities.get(b)) return 1;
+      if (self._priorities.get(a) > self._priorities.get(b)) return -1;
       return 0;
     })
   }
@@ -60,10 +60,10 @@ MemoryStore.prototype.takeFirstN = function (n, cb) {
   var taskIds = self._queue.splice(0, n);
   var tasks = {};
   taskIds.forEach(function (taskId) {
-    tasks[taskId] = self._tasks[taskId];
-    delete self._tasks[taskId];
+    tasks[taskId] = self._tasks.get(taskId);
+    self._tasks.delete(taskId);
   })
-  self._running[lockId] = tasks;
+  self._running.set(lockId, tasks);
   cb(null, lockId);
 }
 
@@ -73,16 +73,16 @@ MemoryStore.prototype.takeLastN = function (n, cb) {
   var taskIds = self._queue.splice(-n).reverse();
   var tasks = {};
   taskIds.forEach(function (taskId) {
-    tasks[taskId] = self._tasks[taskId];
-    delete self._tasks[taskId];
+    tasks[taskId] = self._tasks.get(taskId);
+    self._tasks.delete(taskId);
   })
-  self._running[lockId] = tasks;
+  self._running.set(lockId, tasks);
   cb(null, lockId);
 }
 
 MemoryStore.prototype.getLock = function (lockId, cb) {
   var self = this;
-  cb(null, self._running[lockId]);
+  cb(null, self._running.get(lockId));
 }
 
 MemoryStore.prototype.getRunningTasks = function (cb) {
@@ -92,7 +92,7 @@ MemoryStore.prototype.getRunningTasks = function (cb) {
 
 MemoryStore.prototype.releaseLock = function (lockId, cb) {
   var self = this;
-  delete self._running[lockId];
+  self._running.delete(lockId);
   cb();
 }
 
