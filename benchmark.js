@@ -2,7 +2,6 @@ var test = require('better-queue-store-test');
 
 var Memory = require('.');
 
-
 // Test 1: No options
 test.benchmark('Memory', {
   create: function (cb) {
