@@ -29,9 +29,10 @@ MemoryStore.prototype.getTask = function (taskId, cb) {
 
 MemoryStore.prototype.deleteTask = function (taskId, cb) {
   var self = this;
+  var hadTask = self._tasks[taskId];
   delete self._tasks[taskId];
   delete self._priorities[taskId];
-  if (self._queue.indexOf(taskId) > -1) {
+  if (hadTask) {
     self._queue.splice(self._queue.indexOf(taskId), 1);
   }
   cb();
@@ -39,8 +40,9 @@ MemoryStore.prototype.deleteTask = function (taskId, cb) {
 
 MemoryStore.prototype.putTask = function (taskId, task, priority, cb) {
   var self = this;
+  var hadTask = self._tasks[taskId];
   self._tasks[taskId] = task;
-  if (self._queue.indexOf(taskId) === -1) {
+  if (!hadTask) {
     self._queue.push(taskId);
   }
   if (priority !== undefined) {
