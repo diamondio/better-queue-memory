@@ -1,6 +1,6 @@
 {
   "name": "better-queue-memory",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A really fast memory store for better-queue",
   "main": "index.js",
   "scripts": {
