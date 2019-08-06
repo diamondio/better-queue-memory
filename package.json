@@ -1,6 +1,6 @@
 {
   "name": "better-queue-memory",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A really fast memory store for better-queue",
   "main": "index.js",
   "scripts": {
@@ -23,9 +23,6 @@
     "url": "https://github.com/diamondio/better-queue-memory/issues"
   },
   "homepage": "https://github.com/diamondio/better-queue-memory#readme",
-  "peerDependencies": {
-    "better-queue": "3.x"
-  },
   "devDependencies": {
     "better-queue-store-test": "^1.0.2"
   },
